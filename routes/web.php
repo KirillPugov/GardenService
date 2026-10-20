@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Public\ServiceRequestController;
+use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\ServiceRequestController as AdminServiceRequestController;
 
 Route::inertia('/', 'welcome')->name('home');
@@ -38,6 +39,14 @@ Route::prefix('admin')
         '/requests/{serviceRequest}/status',
         [AdminServiceRequestController::class, 'updateStatus']
         )->name('requests.status.update');
+        
+        Route::get('/services', [AdminServiceController::class, 'index'])
+        ->name('services.index');
+        Route::get('/services/create', [AdminServiceController::class, 'create'])
+        ->name('services.create');
+
+        Route::post('/services', [AdminServiceController::class, 'store'])
+        ->name('services.store');
     });
 
 

@@ -1,7 +1,7 @@
 
 import { Link } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
-
+import { index as adminServicesIndex } from '@/routes/admin/services';
 import { index as requestsIndex } from '@/routes/admin/requests';
 import { index as servicesIndex } from '@/routes/services';
 
@@ -33,6 +33,14 @@ export default function AdminLayout({
                         >
                             На сайт
                         </Link>
+
+                        <Link
+                            href={adminServicesIndex.url()}
+                            className="text-slate-600 hover:text-slate-900"
+                        >
+                            Услуги
+                        </Link>
+                        
                     </nav>
                 </div>
             </header>

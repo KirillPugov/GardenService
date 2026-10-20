@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\RequestStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateServiceRequestStatus;
+use Illuminate\Support\Facades\Gate;
 use App\Models\ServiceRequest;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -14,6 +15,7 @@ class ServiceRequestController extends Controller
 {
     public function index(): Response
     {
+        Gate::authorize('viewAny', ServiceRequest::class);
         $requests = ServiceRequest::query()
             ->select([
                 'id',
@@ -47,6 +49,7 @@ class ServiceRequestController extends Controller
 
     public function show(ServiceRequest $serviceRequest): Response
     {
+        Gate::authorize('view', $serviceRequest);
         $serviceRequest->load('items');
 
         return Inertia::render('admin/requests/show', [
