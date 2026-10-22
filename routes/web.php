@@ -23,6 +23,8 @@ Route::get('/requests/create', [ServiceRequestController::class, 'create'])
 Route::post('/requests', [ServiceRequestController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('requests.store');
+Route::get('/services/{service:slug}', [ServiceController::class, 'show'])
+        ->name('services.show');
 
 Route::prefix('admin')
     ->name('admin.')
@@ -47,6 +49,24 @@ Route::prefix('admin')
 
         Route::post('/services', [AdminServiceController::class, 'store'])
         ->name('services.store');
+        Route::get('/services/{service}/edit', [AdminServiceController::class, 'edit'])
+        ->name('services.edit');
+
+        Route::patch('/services/{service}', [AdminServiceController::class, 'update'])
+        ->name('services.update');
+        Route::delete(
+        '/services/{service}',
+        [AdminServiceController::class, 'destroy']
+        )->name('services.destroy');
+        Route::get(
+            '/services/trashed',
+            [AdminServiceController::class, 'trashed']
+        )->name('services.trashed');
+
+Route::patch(
+    '/services/{service}/restore',
+    [AdminServiceController::class, 'restore']
+)->withTrashed()->name('services.restore');
     });
 
 
